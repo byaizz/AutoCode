@@ -1,5 +1,6 @@
 #include "Method.h"
 #include <QString>
+#include <QList>
 
 Method::Method()
 {
@@ -52,6 +53,8 @@ void Method::WriteConstructorCPP(std::ostream &os, const AutoCodeParam &param)
     //函数头部分
     os<<param.GetClassName().toStdString()<<"::"            \
      <<param.GetClassName().toStdString()<<"()\n";
+    //初始化部分
+        //add your code here
     //函数体部分
     os<<"{\n\n}\n\n";
 }
@@ -122,4 +125,30 @@ void Method::WriteDestructorHeader(std::ostream &os, const AutoCodeParam &param)
 {
     //函数头部分
     os<<"\t~"<<param.GetClassName().toStdString()<<"();\n";
+}
+
+void Method::WriteDefaultValue(std::ostream &os, const QList<AutoCodeParam> &paramList)
+{
+    int size = paramList.size();
+    bool first = true;
+    if (size <= 0)  return;
+    for (int i = 0; i < size; ++i)
+    {
+        if (paramList[i].GetDefaultValue() != "")
+        {
+            if (first)
+            {
+                //第一次以“:”开始
+                os<<"\t:m_"<<paramList[i].GetFullName().toStdString()<<"("    \
+                 <<paramList[i].GetDefaultValue().toStdString()<<")\n";
+                first = false;
+            }
+            else
+            {
+                //非第一次以","开始
+                os<<"\t,m_"<<paramList[i].GetFullName().toStdString()<<"("    \
+                 <<paramList[i].GetDefaultValue().toStdString()<<")\n";
+            }
+        }
+    }
 }

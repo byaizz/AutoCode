@@ -17,6 +17,7 @@ public:
     void SetNotes(const QString &notes);
     void SetAuthor(const QString &author);
     void SetCreateDate(const QString &createDate);
+    void SetDefaultValue(const QString &defaultValue);
     //get parameter
     QString GetName() const;
     QString GetClassName() const;
@@ -26,6 +27,7 @@ public:
     QString GetNotes() const;
     QString GetAuthor() const;
     QString GetCreateDate() const;
+    QString GetDefaultValue() const;
     QString GetFullName() const;
 private:
     QString m_className;        //参数类名称
@@ -36,6 +38,7 @@ private:
     QString m_notes;            //注释内容
     QString m_author;           //作者
     QString m_createDate;       //创建日期
+    QString m_defaultValue;     //默认值
 };
 
 #endif // AUTOCODEPARAM_H

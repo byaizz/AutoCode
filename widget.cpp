@@ -24,7 +24,8 @@ Widget::~Widget()
 void Widget::on_pushButton_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,tr("选择文件:"),
-                                                    "D:\\personal_by\\documents",tr("*.xls *.xlsx"));
+                                                    "D:\\RollWare\\personal_by\\documents",
+                                                    tr("*.xls *.xlsx"));
 
     {
         //not use
@@ -38,6 +39,7 @@ void Widget::on_pushButton_clicked()
         //    QAxObject *usedrange = worksheet->querySubObject("UsedRange");
     }
 
+    if (QFile::exists(fileName) == false) return;
     ExcelManager excel;
     if (!excel.Open(fileName))  return;//打开文件
     QVariant vardata = excel.GetSheetData();//获取第一张sheet所有数据
@@ -55,10 +57,11 @@ void Widget::on_pushButton_clicked()
     if (ofs)
     {
         int i = 2;
-        while(i < 3)
+        QList<AutoCodeParam> paramList;
+        while(i <= 3)
         {
             rowdata = rowsdata[i].toList();
-            if (rowdata.size() < 8) break;
+            if (rowdata.size() < 9) break;
             AutoCodeParam param;
             param.SetClassName(rowdata[0].toString());
             param.SetName(rowdata[1].toString());
@@ -68,6 +71,7 @@ void Widget::on_pushButton_clicked()
             param.SetNotes(rowdata[5].toString());
             param.SetAuthor(rowdata[6].toString());
             param.SetCreateDate(rowdata[7].toString());
+            param.SetDefaultValue(rowdata[8].toString());
             Method method;
             method.WriteGetFuncCPP(ofs,param);
             method.WriteSetFuncCPP(ofs,param);
@@ -79,8 +83,15 @@ void Widget::on_pushButton_clicked()
             method.WriteDestructorHeader(ofs,param);
             method.WriteClassDefinitionHeader(ofs,param);
 
+            paramList.append(param);
+            if (i == 3)
+            {
+                method.WriteDefaultValue(ofs,paramList);
+            }
+
             ++i;
         }
+
         ofs.close();
     }
     else

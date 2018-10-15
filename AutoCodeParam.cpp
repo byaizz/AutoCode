@@ -50,6 +50,11 @@ void AutoCodeParam::SetCreateDate(const QString &createDate)
     m_createDate = createDate;
 }
 
+void AutoCodeParam::SetDefaultValue(const QString &defaultValue)
+{
+    m_defaultValue = defaultValue;
+}
+
 //get parameter
 QString AutoCodeParam::GetName() const
 {
@@ -89,6 +94,11 @@ QString AutoCodeParam::GetAuthor() const
 QString AutoCodeParam::GetCreateDate() const
 {
     return m_createDate;
+}
+
+QString AutoCodeParam::GetDefaultValue() const
+{
+    return m_defaultValue;
 }
 
 QString AutoCodeParam::GetFullName() const
