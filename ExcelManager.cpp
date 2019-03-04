@@ -87,3 +87,18 @@ QVariant ExcelManager::GetSheetData()
     QVariant vardata = usedrange->dynamicCall("Value2()");
     return vardata;
 }
+
+void ExcelManager::PrintPDF()
+{
+    printer.setOutputFileName("test_by.pdf");
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPageSize(QPrinter::A4);
+    printer.setPageMargins(20,20,20,20,QPrinter::Millimeter);
+    printer.setColorMode(QPrinter::Color);
+    printer.setResolution(300);
+
+    QTextDocument *doc = new QTextDocument();
+ //   doc->setPageSize(printer.pageSize);
+ //   doc->setDefaultFont(QFont("Arial"),4);
+    doc->print(&printer);
+}

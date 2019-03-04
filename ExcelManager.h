@@ -2,6 +2,8 @@
 #define EXCELMANAGER_H
 
 #include <QAxObject>
+#include <QtPrintSupport/QPrinter>
+#include <QTextDocument>
 
 class ExcelManager
 {
@@ -16,12 +18,15 @@ public:
     int GetSheetCount();//获取行数量
     QVariant GetSheetData();//获取sheet中所有行数据，返回值List中每个元素为一整行的数据
 
+    void PrintPDF();
+
 private:
     QAxObject       excel;
     QAxObject   *   workbooks;
     QAxObject   *   workbook;
     QAxObject   *   worksheets;
     QAxObject   *   worksheet;
+    QPrinter        printer;
 };
 
 #endif // EXCELMANAGER_H

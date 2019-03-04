@@ -25,6 +25,28 @@
    <property name="text">
     <string>选择文件生成代码</string>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="default">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>190</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>生成pdf</string>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
