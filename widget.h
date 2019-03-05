@@ -15,6 +15,9 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
+public:
+    void WriteSheetdataToCode();
+
 private slots:
     void on_pushButton_clicked();
 

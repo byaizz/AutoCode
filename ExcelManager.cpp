@@ -76,7 +76,7 @@ void ExcelManager::Close()
     worksheet = NULL;
 }
 
-int ExcelManager::GetSheetCount()
+int ExcelManager::GetSheetsCount()
 {
     return worksheets->property("Count").toInt();
 }
