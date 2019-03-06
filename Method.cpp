@@ -35,7 +35,8 @@ void Method::WriteGetFuncCPP(std::ostream &os, const AutoCodeParam &param)
     if (param.GetElementCount().size() <= 0)
     {
         //函数头部分
-        os<<param.GetType().toStdString()<<" Get"<<name.toStdString()
+        os<<param.GetType().toStdString()<<" "<<param.GetClassName().toStdString()
+         <<"::Get"<<name.toStdString()
          <<"() const\n";
         //函数体部分
         os<<"{\n\treturn "<<param.GetFullNameForClass().toStdString()
@@ -68,6 +69,7 @@ void Method::WriteSetFuncCPP(std::ostream &os, const AutoCodeParam &param)
     {
         arrayNote = " &";
     }
+    else
     {
         arrayNote = " *";
     }
@@ -344,7 +346,7 @@ void Method::WriteCPP(std::ostream &os, const QList<AutoCodeParam> &paramList)
 {
     if (paramList.size() <= 0) return;
     //输出include
-    os<<"#inclde \""<<paramList[0].GetClassName().toStdString()<<".h\"\n";
+    os<<"#include \""<<paramList[0].GetClassName().toStdString()<<".h\"\n";
     os<<"\n";
     WriteClassCPP(os,paramList);
 }
