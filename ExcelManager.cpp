@@ -90,7 +90,7 @@ QVariant ExcelManager::GetSheetData()
 
 void ExcelManager::PrintPDF()
 {
-    printer.setOutputFileName("test_by.pdf");
+    printer.setOutputFileName("..\\autoCode.pdf");
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPageSize(QPrinter::A4);
     printer.setPageMargins(20,20,20,20,QPrinter::Millimeter);

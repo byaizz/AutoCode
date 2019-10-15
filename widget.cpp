@@ -23,21 +23,10 @@ Widget::~Widget()
 
 void Widget::on_pushButton_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,tr("选择文件:"),
-                                                    "D:\\RollWare\\personal_by\\documents",
-                                                    tr("*.xls *.xlsx"));
-
-    {
-        //not use
-        //    QAxObject excel;
-        //    excel.setControl("Excel.Application");
-        //    excel.setProperty("Visible", false);
-        //    QAxObject *workbooks = excel.querySubObject("WorkBooks");
-        //    workbooks->dynamicCall("Open(const QString&)", fileName);
-        //    QAxObject *workbook = excel.querySubObject("ActiveWorkBook");
-        //    QAxObject *worksheet = workbook->querySubObject("WorkSheets(int)", 1);
-        //    QAxObject *usedrange = worksheet->querySubObject("UsedRange");
-    }
+    //选择文件
+    QString fileName = QFileDialog::getOpenFileName(this,"选择文件:",
+                                                    "..\\",
+                                                    "*.xls *.xlsx");
 
     if (QFile::exists(fileName) == false) return;
     ExcelManager excel;
@@ -48,8 +37,8 @@ void Widget::on_pushButton_clicked()
     {
         excel.SwitchSheet(i);
         QVariant vardata = excel.GetSheetData();//获取第一张sheet所有数据
-        QVariantList rowsdata = vardata.toList();
-        QVariantList rowdata = rowsdata[0].toList();
+        QVariantList rowsdata = vardata.toList();//获取行数据
+        QVariantList rowdata = rowsdata[0].toList();//获取第一行的数据
 
         //输出各列名    for test
         for (int i = 0; i < rowdata.size(); ++i)
@@ -79,17 +68,28 @@ void Widget::on_pushButton_clicked()
             paramList.append(param);
         }
 
-        //获取文件名，以类名作为文件名
+        //无参情况下继续下张表单
         if (paramList.size() < 0)
         {
-            return;
+            continue;
         }
-        //输出到文件
-        Method method;
-        QString targetFileName = "D:\\20190304\\";//输出文件的文件名
-        targetFileName += paramList[0].GetClassName();
+
+        //创建目录
+        QDir dir;
+        QString dirName = "..\\target";//目标文件目录
+        if (!dir.exists(dirName))
+        {
+            //dir.mkdir(dirName);//这个函数将会创建一个名为dirName的子目录
+            dir.mkpath(dirName);//这个函数将会创建所有必需的父类目录
+        }
+
+        //获取文件名，以类名作为文件名
+        QString targetFileName = dirName + "\\"+ paramList[0].GetClassName();
         QString HeaderName = targetFileName;
         HeaderName += ".h";
+
+        //输出到文件
+        Method method;
         std::ofstream ofs(HeaderName.toStdString());
         if (ofs)
         {
